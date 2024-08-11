@@ -7,42 +7,66 @@
     let light = false;
     let star = false;
 
-    $: result = calculateResult(parallelPort, twoOrMoreBatteries, serialNumberIsEven, red, blue, light, star);
+    $: result = calculateResult(red, blue, light, star, parallelPort, twoOrMoreBatteries, serialNumberIsEven);
 
-    function calculateResult(parallelPort: boolean, twoOrMoreBatteries: boolean, serialNumberIsEven: boolean, red: boolean, blue: boolean, light: boolean, star: boolean) {
-        if (red && blue && star && light) {
-            return "DO NOT CUT";
-        } else if (red && blue && star && !light && parallelPort) {
-            return "CUT";
-        } else if (red && blue && !star && light && serialNumberIsEven) {
-            return "CUT";
-        } else if (red && blue && !star && !light && serialNumberIsEven) {
-            return "CUT";
-        } else if (red && !blue && star && light && twoOrMoreBatteries) {
-            return "CUT";
-        } else if (red && !blue && star && !light) {
-            return "CUT";
-        } else if (red && !blue && !star && light && twoOrMoreBatteries) {
-            return "CUT";
-        } else if (red && !blue && !star && !light && serialNumberIsEven) {
-            return "CUT";
-        } else if (!red && blue && star && light && parallelPort) {
-            return "CUT";
-        } else if (!red && blue && star && !light) {
-            return "DO NOT CUT";
-        } else if (!red && blue && !star && light && parallelPort) {
-            return "CUT";
-        } else if (!red && blue && !star && !light && serialNumberIsEven) {
-            return "CUT";
-        } else if (!red && !blue && star && light && twoOrMoreBatteries) {
-            return "CUT";
-        } else if (!red && !blue && star && !light) {
-            return "CUT";
-        } else if (!red && !blue && !star && light) {
-            return "DO NOT CUT";
-        } else if (!red && !blue && !star && !light) {
-            return "CUT";
+    function whiteWire(light: boolean, star: boolean, twoOrMoreBatteries: boolean) {
+        if (star && light) {
+            return twoOrMoreBatteries;
         }
+        if (light) {
+            return false;
+        }
+        if (star) {
+            return true;
+        }
+        return true;
+    }
+
+    function redWire(light: boolean, star: boolean, twoOrMoreBatteries: boolean, serialNumberIsEven: boolean) {
+        if (star && light) {
+            return twoOrMoreBatteries;
+        }
+        if (light) {
+            return twoOrMoreBatteries;
+        }
+        if (star) {
+            return true;
+        }
+        return serialNumberIsEven;
+    }
+
+    function blueWire(light: boolean, star: boolean, parallelPort: boolean, serialNumberIsEven: boolean) {
+        if (star && light) {
+            return parallelPort;
+        }
+        if (light) {
+            return parallelPort;
+        }
+        if (star) {
+            return false;
+        }
+        return serialNumberIsEven;
+    }
+
+    function redBlueWire(light: boolean, star: boolean, parallelPort: boolean, serialNumberIsEven: boolean) {
+        if (star && light) {
+            return false;
+        }
+        if (light) {
+            return serialNumberIsEven;
+        }
+        if (star) {
+            return parallelPort;
+        }
+        return serialNumberIsEven;
+    }
+
+    function calculateResult(red: boolean, blue: boolean, light: boolean, star: boolean, parallelPort: boolean, twoOrMoreBatteries: boolean, serialNumberIsEven: boolean) {
+        if (red && blue) return redBlueWire(light, star, parallelPort, serialNumberIsEven);
+        if (!red && !blue) return whiteWire(light, star, twoOrMoreBatteries);
+        if (red) return redWire(light, star, twoOrMoreBatteries, serialNumberIsEven);
+        if (blue) return blueWire(light, star, parallelPort, serialNumberIsEven);
+        return false;
     }
 </script>
 
@@ -77,6 +101,6 @@
         <input type="checkbox" bind:checked={star} id="star">
     </div>
     <strong id="result">
-        {result}
+        {result ? 'Cut' : 'Do Not Cut'}
     </strong>
 </main>

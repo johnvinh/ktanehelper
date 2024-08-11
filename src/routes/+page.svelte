@@ -7,65 +7,52 @@
     let light = false;
     let star = false;
 
-    $: result = calculateResult(red, blue, light, star, parallelPort, twoOrMoreBatteries, serialNumberIsEven);
+    $: result = calculateResult(red, blue, {light, star, twoOrMoreBatteries, parallelPort, serialNumberIsEven});
 
-    function whiteWire(light: boolean, star: boolean, twoOrMoreBatteries: boolean) {
-        if (star && light) {
-            return twoOrMoreBatteries;
-        }
-        if (light) {
-            return false;
-        }
-        if (star) {
-            return true;
-        }
-        return true;
-    }
+    type WireCondition = {
+        light: boolean;
+        star: boolean;
+        twoOrMoreBatteries?: boolean;
+        parallelPort?: boolean;
+        serialNumberIsEven?: boolean;
+    };
 
-    function redWire(light: boolean, star: boolean, twoOrMoreBatteries: boolean, serialNumberIsEven: boolean) {
-        if (star && light) {
-            return twoOrMoreBatteries;
-        }
-        if (light) {
-            return twoOrMoreBatteries;
-        }
-        if (star) {
-            return true;
-        }
-        return serialNumberIsEven;
-    }
+    const wireLogic = {
+        white: ({light, star, twoOrMoreBatteries}: WireCondition) => {
+            if (star && light) return !!twoOrMoreBatteries;
+            return !light;
+        },
 
-    function blueWire(light: boolean, star: boolean, parallelPort: boolean, serialNumberIsEven: boolean) {
-        if (star && light) {
-            return parallelPort;
-        }
-        if (light) {
-            return parallelPort;
-        }
-        if (star) {
-            return false;
-        }
-        return serialNumberIsEven;
-    }
+        red: ({light, star, twoOrMoreBatteries, serialNumberIsEven}: WireCondition) => {
+            if (star && light) return !!twoOrMoreBatteries;
+            if (light) return !!twoOrMoreBatteries;
+            if (star) return true;
+            return !!serialNumberIsEven;
+        },
 
-    function redBlueWire(light: boolean, star: boolean, parallelPort: boolean, serialNumberIsEven: boolean) {
-        if (star && light) {
-            return false;
-        }
-        if (light) {
-            return serialNumberIsEven;
-        }
-        if (star) {
-            return parallelPort;
-        }
-        return serialNumberIsEven;
-    }
+        blue: ({light, star, parallelPort, serialNumberIsEven}: WireCondition) => {
+            if ((star && light) || light) return !!parallelPort;
+            if (star) return false;
+            return !!serialNumberIsEven;
+        },
 
-    function calculateResult(red: boolean, blue: boolean, light: boolean, star: boolean, parallelPort: boolean, twoOrMoreBatteries: boolean, serialNumberIsEven: boolean) {
-        if (red && blue) return redBlueWire(light, star, parallelPort, serialNumberIsEven);
-        if (!red && !blue) return whiteWire(light, star, twoOrMoreBatteries);
-        if (red) return redWire(light, star, twoOrMoreBatteries, serialNumberIsEven);
-        if (blue) return blueWire(light, star, parallelPort, serialNumberIsEven);
+        redBlue: ({light, star, parallelPort, serialNumberIsEven}: WireCondition) => {
+            if (star && light) return false;
+            if (light) return !!serialNumberIsEven;
+            if (star) return !!parallelPort;
+            return !!serialNumberIsEven;
+        }
+    };
+
+    function calculateResult(
+        red: boolean,
+        blue: boolean,
+        condition: WireCondition
+    ): boolean {
+        if (red && blue) return wireLogic.redBlue(condition);
+        if (!red && !blue) return wireLogic.white(condition);
+        if (red) return wireLogic.red(condition);
+        if (blue) return wireLogic.blue(condition);
         return false;
     }
 </script>

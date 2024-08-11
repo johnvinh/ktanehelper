@@ -72,35 +72,50 @@
 
 <main>
     <h1>Complicated Wires</h1>
-    <div>
-        <label for="parallelPort">Parallel Port</label>
-        <input type="checkbox" bind:checked={parallelPort} id="parallelPort">
-    </div>
-    <div>
-        <label for="twoOrMoreBatteries">Two or More Batteries</label>
-        <input type="checkbox" bind:checked={twoOrMoreBatteries} id="twoOrMoreBatteries">
-    </div>
-    <div>
-        <label for="serialNumberIsEven">Serial Number is Even</label>
-        <input type="checkbox" bind:checked={serialNumberIsEven} id="serialNumberIsEven">
-    </div>
-    <div>
-        <label for="red">Red</label>
-        <input type="checkbox" bind:checked={red} id="red">
-    </div>
-    <div>
-        <label for="blue">Blue</label>
-        <input type="checkbox" bind:checked={blue} id="blue">
-    </div>
-    <div>
-        <label for="light">Light</label>
-        <input type="checkbox" bind:checked={light} id="light">
-    </div>
-    <div>
-        <label for="star">Star</label>
-        <input type="checkbox" bind:checked={star} id="star">
-    </div>
-    <strong id="result">
-        {result ? 'Cut' : 'Do Not Cut'}
-    </strong>
+    <section>
+        <form>
+            <fieldset>
+                <legend>Bomb Attributes</legend>
+                <div>
+                    <label for="parallelPort">Parallel Port</label>
+                    <input type="checkbox" bind:checked={parallelPort} id="parallelPort">
+                </div>
+                <div>
+                    <label for="twoOrMoreBatteries">Two or More Batteries</label>
+                    <input type="checkbox" bind:checked={twoOrMoreBatteries} id="twoOrMoreBatteries">
+                </div>
+                <div>
+                    <label for="serialNumberIsEven">Serial Number is Even</label>
+                    <input type="checkbox" bind:checked={serialNumberIsEven} id="serialNumberIsEven">
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Wire Colors</legend>
+                <div>
+                    <label for="red">Red</label>
+                    <input type="checkbox" bind:checked={red} id="red">
+                </div>
+                <div>
+                    <label for="blue">Blue</label>
+                    <input type="checkbox" bind:checked={blue} id="blue">
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Wire Attributes</legend>
+
+                <div>
+                    <label for="light">Light</label>
+                    <input type="checkbox" bind:checked={light} id="light">
+                </div>
+
+                <div>
+                    <label for="star">Star</label>
+                    <input type="checkbox" bind:checked={star} id="star">
+                </div>
+            </fieldset>
+            <strong id="result">
+                {result ? 'Cut' : 'Do Not Cut'}
+            </strong>
+        </form>
+    </section>
 </main>

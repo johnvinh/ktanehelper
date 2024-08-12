@@ -29,16 +29,16 @@
 <section>
     <h2>Password</h2>
     <div>
-        <label for="first-letters">First Letter Column</label>
-        <input type="text" placeholder="First letters" id="first-letters" bind:value={firstColumnLetters}/>
+        <label for="first-letters">First Column Letters</label>
+        <input type="text" placeholder="First column letters" id="first-letters" bind:value={firstColumnLetters}/>
     </div>
     <div>
-        <label for="third-letters">Third Letter Column</label>
-        <input type="text" placeholder="Third letters" id="third-letters" bind:value={thirdColumnLetters}/>
+        <label for="third-letters">Third Column Letters</label>
+        <input type="text" placeholder="Third column letters" id="third-letters" bind:value={thirdColumnLetters}/>
     </div>
     <div>
-        <label for="fifth-letters">Fifth Letter Column</label>
-        <input type="text" placeholder="Fifth letters" id="fifth-letters" bind:value={fifthColumnLetters}/>
+        <label for="fifth-letters">Fifth Column Letters</label>
+        <input type="text" placeholder="Fifth column letters" id="fifth-letters" bind:value={fifthColumnLetters}/>
     </div>
     <input type="button" value="Find Password Possibilities" on:click={findPasswordPossibilities} />
     <p id="password-output">{passwordOutput}</p>

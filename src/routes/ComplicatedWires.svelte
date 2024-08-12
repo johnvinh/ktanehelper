@@ -1,7 +1,7 @@
 <script lang="ts">
-    let parallelPort = false;
-    let twoOrMoreBatteries = false;
-    let serialNumberIsEven = false;
+    export let parallelPort = false;
+    export let twoOrMoreBatteries = false;
+    export let serialNumberIsEven = false;
     let red = false;
     let blue = false;
     let light = false;

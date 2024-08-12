@@ -1,8 +1,10 @@
 <script lang="ts">
+    import ComplicatedWires from "./ComplicatedWires.svelte";
 
-import ComplicatedWires from "./ComplicatedWires.svelte";
+    let parallelPort = false;
+    let twoOrMoreBatteries = false;
+    let serialNumberIsEven = false;
 </script>
 
-<main>
-    <ComplicatedWires />
-</main>
+<ComplicatedWires parallelPort={parallelPort} twoOrMoreBatteries={twoOrMoreBatteries}
+                  serialNumberIsEven={serialNumberIsEven}/>
